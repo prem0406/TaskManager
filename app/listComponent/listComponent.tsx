@@ -52,6 +52,8 @@ export const ListComponent: React.FC<IListComponentProps> = ({
     </View>
   );
 
+  const keyExtractor = (item: TTask) => item.id;
+
   return (
     <View style={styles.container}>
       {/* Tabs */}
@@ -90,13 +92,22 @@ export const ListComponent: React.FC<IListComponentProps> = ({
       </View>
 
       {/* Task List */}
-      <FlatList
-        data={filteredTasks}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        ItemSeparatorComponent={ItemSeparator}
-        contentContainerStyle={styles.listContent}
-      />
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={filteredTasks}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          ItemSeparatorComponent={ItemSeparator}
+          contentContainerStyle={styles.listContent}
+          ListEmptyComponent={
+            <View style={{ padding: 20, alignItems: 'center' }}>
+              <Text style={{ color: '#6b7280', fontSize: 16 }}>
+                No tasks to display
+              </Text>
+            </View>
+          }
+        />
+      </View>
     </View>
   );
 };
@@ -105,6 +116,7 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#f5f3f7',
     borderRadius: 20,
     overflow: 'hidden',

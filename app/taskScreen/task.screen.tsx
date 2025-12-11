@@ -82,5 +82,5 @@ export const TaskScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 16, rowGap: 16 },
+  container: { flex: 1, padding: 16, rowGap: 16 },
 });
