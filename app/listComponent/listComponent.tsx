@@ -1,0 +1,184 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  Switch,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from 'react-native';
+
+export const ListComponent = () => {
+  const [activeTab, setActiveTab] = useState('pending');
+  const [tasks, setTasks] = useState([
+    { id: '1', name: 'Mustard Oil', completed: false },
+    { id: '2', name: 'Mustard Oil', completed: true },
+    { id: '3', name: 'Mustard Oil', completed: false },
+  ]);
+
+  const toggleTask = (id: string) => {
+    setTasks(
+      tasks.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task,
+      ),
+    );
+  };
+
+  const filteredTasks = tasks.filter(task =>
+    activeTab === 'pending' ? !task.completed : task.completed,
+  );
+
+  const renderItem = ({ item }) => (
+    <View style={styles.taskItem}>
+      <View style={styles.avatar}>
+        <Text style={styles.avatarText}>A</Text>
+      </View>
+
+      <Text style={styles.taskName}>{item.name}</Text>
+
+      <Switch
+        value={item.completed}
+        onValueChange={() => toggleTask(item.id)}
+        trackColor={{ false: '#d1d5db', true: '#7c3aed' }}
+        thumbColor={item.completed ? '#ffffff' : '#6b7280'}
+        ios_backgroundColor="#d1d5db"
+        style={styles.switch}
+      />
+    </View>
+  );
+
+  const ItemSeparator = () => <View style={styles.separator} />;
+
+  return (
+    <View style={styles.container}>
+      {/* Tabs */}
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'pending' && styles.activeTab]}
+          onPress={() => setActiveTab('pending')}
+          activeOpacity={0.7}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === 'pending' && styles.activeTabText,
+            ]}
+          >
+            Pending
+          </Text>
+          {activeTab === 'pending' && <View style={styles.tabIndicator} />}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'completed' && styles.activeTab]}
+          onPress={() => setActiveTab('completed')}
+          activeOpacity={0.7}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === 'completed' && styles.activeTabText,
+            ]}
+          >
+            Completed
+          </Text>
+          {activeTab === 'completed' && <View style={styles.tabIndicator} />}
+        </TouchableOpacity>
+      </View>
+
+      {/* Task List */}
+      <FlatList
+        data={filteredTasks}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        ItemSeparatorComponent={ItemSeparator}
+        contentContainerStyle={styles.listContent}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f5f3f7',
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#f5f3f7',
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e5e5',
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 12,
+    position: 'relative',
+  },
+  activeTab: {
+    // Active tab styling handled by indicator
+  },
+  tabText: {
+    fontSize: 18,
+    color: '#6b7280',
+    fontWeight: '500',
+  },
+  activeTabText: {
+    color: '#7c3aed',
+    fontWeight: '600',
+  },
+  tabIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 3,
+    backgroundColor: '#7c3aed',
+    borderRadius: 2,
+  },
+  listContent: {
+    paddingVertical: 8,
+  },
+  taskItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    backgroundColor: '#f5f3f7',
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#e0d4f7',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  avatarText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#2d2d2d',
+  },
+  taskName: {
+    flex: 1,
+    fontSize: 18,
+    color: '#2d2d2d',
+    fontWeight: '400',
+  },
+  switch: {
+    transform:
+      Platform.OS === 'ios'
+        ? [{ scaleX: 0.9 }, { scaleY: 0.9 }]
+        : [{ scaleX: 1.1 }, { scaleY: 1.1 }],
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#e5e5e5',
+    marginLeft: 80,
+  },
+});
