@@ -1,7 +1,11 @@
-import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import {
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React, { PropsWithChildren } from 'react';
 import { TodoListHeader } from './todoListHeader';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface IScreenLayoutProps {
   title?: string;
@@ -13,10 +17,10 @@ export const ScreenLayout: React.FC<PropsWithChildren<IScreenLayoutProps>> = ({
 }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <TodoListHeader title={title} />
         {children}
-      </SafeAreaView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -24,6 +28,6 @@ export const ScreenLayout: React.FC<PropsWithChildren<IScreenLayoutProps>> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#BDBDBD',
+    backgroundColor: '#efefef',
   },
 });

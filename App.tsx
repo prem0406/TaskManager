@@ -1,14 +1,11 @@
-import { StatusBar, useColorScheme } from 'react-native';
 import { TaskScreen } from './app/taskScreen/task.screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+    <SafeAreaProvider>
       <TaskScreen />
-    </>
+    </SafeAreaProvider>
   );
 }
 
