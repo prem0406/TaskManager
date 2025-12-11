@@ -9,6 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { TTask } from '../types/tasks.type';
+import { Tabs } from '../lib/tabs';
 
 interface IListComponentProps {
   tasks: TTask[];
@@ -56,40 +57,7 @@ export const ListComponent: React.FC<IListComponentProps> = ({
 
   return (
     <View style={styles.container}>
-      {/* Tabs */}
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tab, activeTab === 'pending' && styles.activeTab]}
-          onPress={() => setActiveTab('pending')}
-          activeOpacity={0.7}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === 'pending' && styles.activeTabText,
-            ]}
-          >
-            Pending
-          </Text>
-          {activeTab === 'pending' && <View style={styles.tabIndicator} />}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.tab, activeTab === 'completed' && styles.activeTab]}
-          onPress={() => setActiveTab('completed')}
-          activeOpacity={0.7}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === 'completed' && styles.activeTabText,
-            ]}
-          >
-            Completed
-          </Text>
-          {activeTab === 'completed' && <View style={styles.tabIndicator} />}
-        </TouchableOpacity>
-      </View>
+      <Tabs setActiveTab={setActiveTab} activeTab={activeTab} />
 
       {/* Task List */}
       <View style={{ flex: 1 }}>
