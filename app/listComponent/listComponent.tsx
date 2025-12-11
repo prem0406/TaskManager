@@ -8,14 +8,18 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
+import { TTask } from '../types/tasks.type';
 
-export const ListComponent = () => {
+interface IListComponentProps {
+  tasks: TTask[];
+  setTasks: React.Dispatch<React.SetStateAction<TTask[]>>;
+}
+
+export const ListComponent: React.FC<IListComponentProps> = ({
+  tasks,
+  setTasks,
+}) => {
   const [activeTab, setActiveTab] = useState('pending');
-  const [tasks, setTasks] = useState([
-    { id: '1', name: 'Mustard Oil', completed: false },
-    { id: '2', name: 'Mustard Oil', completed: true },
-    { id: '3', name: 'Mustard Oil', completed: false },
-  ]);
 
   const toggleTask = (id: string) => {
     setTasks(
@@ -29,7 +33,7 @@ export const ListComponent = () => {
     activeTab === 'pending' ? !task.completed : task.completed,
   );
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: TTask }) => (
     <View style={styles.taskItem}>
       <View style={styles.avatar}>
         <Text style={styles.avatarText}>A</Text>
@@ -47,8 +51,6 @@ export const ListComponent = () => {
       />
     </View>
   );
-
-  const ItemSeparator = () => <View style={styles.separator} />;
 
   return (
     <View style={styles.container}>
@@ -98,6 +100,8 @@ export const ListComponent = () => {
     </View>
   );
 };
+
+const ItemSeparator = () => <View style={styles.separator} />;
 
 const styles = StyleSheet.create({
   container: {

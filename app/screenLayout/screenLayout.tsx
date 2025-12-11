@@ -3,11 +3,18 @@ import React, { PropsWithChildren } from 'react';
 import { TodoListHeader } from './todoListHeader';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const ScreenLayout: React.FC<PropsWithChildren> = ({ children }) => {
+interface IScreenLayoutProps {
+  title?: string;
+}
+
+export const ScreenLayout: React.FC<PropsWithChildren<IScreenLayoutProps>> = ({
+  children,
+  title,
+}) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
-        <TodoListHeader />
+        <TodoListHeader title={title} />
         {children}
       </SafeAreaView>
     </TouchableWithoutFeedback>
