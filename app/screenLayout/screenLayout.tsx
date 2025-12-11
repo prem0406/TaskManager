@@ -1,9 +1,4 @@
-import {
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { PropsWithChildren } from 'react';
 import { TodoListHeader } from './todoListHeader';
 
@@ -16,12 +11,10 @@ export const ScreenLayout: React.FC<PropsWithChildren<IScreenLayoutProps>> = ({
   title,
 }) => {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <TodoListHeader title={title} />
-        {children}
-      </View>
-    </TouchableWithoutFeedback>
+    <View style={styles.container}>
+      <TodoListHeader title={title} />
+      {children}
+    </View>
   );
 };
 
