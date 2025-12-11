@@ -8,7 +8,7 @@ interface ITodoListHeaderProps {
 export const TodoListHeader: React.FC<ITodoListHeaderProps> = ({ title }) => {
   return (
     <View style={styles.header}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         //   onPress={onMenuPress}
         style={styles.iconButton}
         activeOpacity={0.7}
@@ -18,11 +18,11 @@ export const TodoListHeader: React.FC<ITodoListHeaderProps> = ({ title }) => {
           <View style={styles.menuLine} />
           <View style={styles.menuLine} />
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <Text style={styles.title}>{title || 'Title'}</Text>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         //   onPress={onProfilePress}
         style={styles.iconButton}
         activeOpacity={0.7}
@@ -31,7 +31,7 @@ export const TodoListHeader: React.FC<ITodoListHeaderProps> = ({ title }) => {
           <View style={styles.profileHead} />
           <View style={styles.profileBody} />
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     backgroundColor: '#f4ebf5',
     paddingHorizontal: 20,
     paddingVertical: 16,
     marginHorizontal: 16,
     marginVertical: 12,
-    borderRadius: 50,
+    // borderRadius: 50,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
