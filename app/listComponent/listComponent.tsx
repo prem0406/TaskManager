@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { TTask } from '../types/tasks.type';
 import { Tabs } from '../lib/tabs';
+import { CustomSwipeable } from '../lib/swipable';
 
 interface IListComponentProps {
   tasks: TTask[];
@@ -33,24 +34,31 @@ export const ListComponent: React.FC<IListComponentProps> = ({
     activeTab === 'pending' ? !task.completed : task.completed,
   );
 
-  const renderItem = ({ item }: { item: TTask }) => (
-    <View style={styles.taskItem}>
-      <View style={styles.avatar}>
-        <Text style={styles.avatarText}>A</Text>
-      </View>
+  const renderItem = ({ item }: { item: TTask }) => {
+    const deleteTask = () => {
+      setTasks(tasks.filter(task => task.id !== item?.id));
+    };
+    return (
+      <CustomSwipeable onDelete={deleteTask}>
+        <View style={styles.taskItem}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>A</Text>
+          </View>
 
-      <Text style={styles.taskName}>{item.name}</Text>
+          <Text style={styles.taskName}>{item.name}</Text>
 
-      <Switch
-        value={item.completed}
-        onValueChange={() => toggleTask(item.id)}
-        trackColor={{ false: '#d1d5db', true: '#7c3aed' }}
-        thumbColor={item.completed ? '#ffffff' : '#6b7280'}
-        ios_backgroundColor="#d1d5db"
-        style={styles.switch}
-      />
-    </View>
-  );
+          <Switch
+            value={item.completed}
+            onValueChange={() => toggleTask(item.id)}
+            trackColor={{ false: '#d1d5db', true: '#7c3aed' }}
+            thumbColor={item.completed ? '#ffffff' : '#6b7280'}
+            ios_backgroundColor="#d1d5db"
+            style={styles.switch}
+          />
+        </View>
+      </CustomSwipeable>
+    );
+  };
 
   const keyExtractor = (item: TTask) => item.id;
 
