@@ -30,13 +30,13 @@ export const CustomSwipeable: React.FC<
           // Swipe threshold reached - show delete button
           Animated.spring(pan, {
             toValue: -100,
-            useNativeDriver: false,
+            useNativeDriver: true,
           }).start();
         } else {
           // Return to original position
           Animated.spring(pan, {
             toValue: 0,
-            useNativeDriver: false,
+            useNativeDriver: true,
           }).start();
         }
       },
@@ -47,7 +47,7 @@ export const CustomSwipeable: React.FC<
     Animated.timing(pan, {
       toValue: -400,
       duration: 300,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start(onDelete);
   };
   return (
