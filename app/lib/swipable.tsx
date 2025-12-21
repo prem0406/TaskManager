@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+//TODO: Improve swipeable performance and UX using Reanimated or Gesture Handler.
 export const CustomSwipeable: React.FC<
   PropsWithChildren<{ onDelete: () => void }>
 > = ({ children, onDelete }) => {
