@@ -10,6 +10,7 @@ import {
 import { TTask } from '../types/tasks.type';
 import { Tabs } from '../lib/tabs';
 import { CustomSwipeable } from '../lib/swipable';
+import { SwipeableGestureHandler } from '../lib/swipableGestureHander';
 
 interface IListComponentProps {
   tasks: TTask[];
@@ -36,10 +37,11 @@ export const ListComponent: React.FC<IListComponentProps> = ({
 
   const renderItem = ({ item }: { item: TTask }) => {
     const deleteTask = () => {
+      console.error('****Deleting Task:', item.id);
       setTasks(tasks.filter(task => task.id !== item?.id));
     };
     return (
-      <CustomSwipeable onDelete={deleteTask}>
+      <SwipeableGestureHandler onDelete={deleteTask}>
         <View style={styles.taskItem}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>A</Text>
@@ -56,7 +58,7 @@ export const ListComponent: React.FC<IListComponentProps> = ({
             style={styles.switch}
           />
         </View>
-      </CustomSwipeable>
+      </SwipeableGestureHandler>
     );
   };
 
@@ -95,6 +97,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   taskItem: {
+    flex: 1,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
