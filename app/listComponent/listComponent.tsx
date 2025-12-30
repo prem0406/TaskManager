@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { TTask } from '../types/tasks.type';
 import { Tabs } from '../lib/tabs';
-import { CustomSwipeable } from '../lib/swipable';
 import { SwipeableGestureHandler } from '../lib/swipableGestureHander';
 
 interface IListComponentProps {
