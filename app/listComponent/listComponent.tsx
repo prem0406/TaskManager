@@ -14,11 +14,13 @@ import { SwipeableGestureHandler } from '../lib/swipableGestureHander';
 interface IListComponentProps {
   tasks: TTask[];
   setTasks: React.Dispatch<React.SetStateAction<TTask[]>>;
+  handleSwipeDelete: (item: TTask) => void;
 }
 
 export const ListComponent: React.FC<IListComponentProps> = ({
   tasks,
   setTasks,
+  handleSwipeDelete,
 }) => {
   const [activeTab, setActiveTab] = useState('pending');
 
@@ -36,8 +38,7 @@ export const ListComponent: React.FC<IListComponentProps> = ({
 
   const renderItem = ({ item }: { item: TTask }) => {
     const deleteTask = () => {
-      console.error('****Deleting Task:', item.id);
-      setTasks(tasks.filter(task => task.id !== item?.id));
+      handleSwipeDelete(item);
     };
     return (
       <SwipeableGestureHandler onDelete={deleteTask}>

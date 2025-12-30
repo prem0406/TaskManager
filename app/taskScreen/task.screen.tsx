@@ -5,6 +5,8 @@ import { CustomTextInput } from '../lib/input';
 import { ListComponent } from '../listComponent/listComponent';
 import { TTask } from '../types/tasks.type';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+import { UndoToast } from '../lib/undoToast';
 
 const STORAGE_KEY = '@tasks';
 
@@ -12,6 +14,33 @@ export const TaskScreen = () => {
   const [tasks, setTasks] = useState<TTask[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [pendingItem, setPendingItem] = useState<any>(null);
+  const [showToast, setShowToast] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleSwipeDelete = (item: TTask) => {
+    setTasks(prev => prev.filter(i => i.id !== item.id));
+    setPendingItem(item);
+    setShowToast(true);
+
+    timerRef.current = setTimeout(() => {
+      setPendingItem(null);
+      setShowToast(false);
+    }, 4000); // Gmail-like delay
+  };
+
+  const handleUndo = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    if (pendingItem) {
+      setTasks(prev => [pendingItem, ...prev]);
+    }
+
+    setPendingItem(null);
+    setShowToast(false);
+  };
 
   useEffect(() => {
     loadTasks();
@@ -41,7 +70,7 @@ export const TaskScreen = () => {
 
   const onAddTask = (taskName: string) => {
     const newTask: TTask = {
-      id: (tasks.length + 1).toString(),
+      id: uuid.v4(),
       name: taskName,
       completed: false,
     };
@@ -75,8 +104,17 @@ export const TaskScreen = () => {
     <ScreenLayout title="Task Manager">
       <View style={styles.container}>
         <CustomTextInput onAddTask={onAddTask} />
-        <ListComponent tasks={tasks} setTasks={setTasks} />
+        <ListComponent
+          tasks={tasks}
+          setTasks={setTasks}
+          handleSwipeDelete={handleSwipeDelete}
+        />
       </View>
+      <UndoToast
+        visible={showToast}
+        message="1 Deleted Task"
+        onUndo={handleUndo}
+      />
     </ScreenLayout>
   );
 };
