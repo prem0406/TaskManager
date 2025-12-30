@@ -1,8 +1,6 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import ReanimatedSwipeable, {
-  SwipeableMethods,
-} from 'react-native-gesture-handler/ReanimatedSwipeable';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, {
   SharedValue,
   useAnimatedStyle,
@@ -53,7 +51,6 @@ function RightAction(
 export const SwipeableGestureHandler: React.FC<
   PropsWithChildren<SwipeableGestureHandlerProps>
 > = ({ children, onDelete }) => {
-  const swipeableRef = useRef<SwipeableMethods | null>(null);
   const translateX = useSharedValue(0);
 
   const rowStyle = useAnimatedStyle(() => ({
@@ -70,7 +67,6 @@ export const SwipeableGestureHandler: React.FC<
 
   return (
     <ReanimatedSwipeable
-      ref={swipeableRef}
       containerStyle={styles.swipeable}
       friction={2}
       // overshootRight={false}
